@@ -1,10 +1,8 @@
 const copy = '© <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
 const url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 const osm = L.tileLayer(url, { attribution: copy })
-const map = L.map('map', { layers: [osm], minZoom: 5 })
-map.locate()
-  .on('locationfound', e => map.setView(e.latlng, 8))
-  .on('locationerror', () => map.setView([0, 0], 5))
+const map = L.map('map', { layers: [osm], minZoom: 3 })
+map.setView([38, 23], 6)
 
 async function load_markers() {
   const markers_url = `/api/markers/?in_bbox=${map.getBounds().toBBoxString()}`
