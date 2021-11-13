@@ -7,6 +7,6 @@ class MarkerSerializer(serializers.GeoFeatureModelSerializer):
 
   class Meta:
     """Marker serializer meta class."""
-    fields = ("id", "name")
+    fields = ("id", "name", "description", "picture_url")
     geo_field = "location"
     model = Marker

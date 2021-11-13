@@ -13,9 +13,16 @@ async function load_markers() {
 }
 async function render_markers() {
   const markers = await load_markers()
-  L.geoJSON(markers).bindPopup(layer => layer.feature.properties.name)
-                    .on('click', markerOnClick)
-                    .addTo(map)
+  L.geoJson(markers, {
+    onEachFeature: function onEachFeature(feature, layer) {
+      var props = feature.properties;
+      var content = `
+        <img width="300" src="${props.picture_url}"/>
+        <h3>${props.name}</h3>
+        <p>${props.description}</p>
+      `;
+      layer.bindPopup(content);
+  }}).addTo(map);
 }
 map.on('moveend', render_markers)
 
