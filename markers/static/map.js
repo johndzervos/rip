@@ -15,17 +15,19 @@ async function render_markers() {
   const markers = await load_markers()
   L.geoJson(markers, {
     onEachFeature: function onEachFeature(feature, layer) {
-      var props = feature.properties;
-      var content = `
+      let props = feature.properties;
+      let name = props.name;
+      let content = `
         <img width="300" src="${props.picture_url}"/>
-        <h3>${props.name}</h3>
+        <h3>${name}</h3>
         <p>${props.description}</p>
+        <button type="button" onclick="markerOnClick('${name}')">Click</button>
       `;
       layer.bindPopup(content);
   }}).addTo(map);
 }
 map.on('moveend', render_markers)
 
-function markerOnClick(e) {
-  alert("hi. you clicked the marker at " + e.latlng);
+function markerOnClick(name) {
+  alert(`hi. you clicked the ${name} marker`);
 }
